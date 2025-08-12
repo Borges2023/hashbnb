@@ -3,28 +3,24 @@ import Item from "../components/Item";
 import axios from "axios";
 
 const Home = () => {
-  const [places, setPlaces] = useState([]);
+  const [accomodations, setAccomodations] = useState([]);
 
   useEffect(() => {
-    const axiosGet = async () => {
+    const getAxios = async () => {
       const { data } = await axios.get("/places");
-      setPlaces(data);
+
+      setAccomodations([...data, ...data]);
     };
 
-    axiosGet();
+    getAxios();
   }, []);
 
   return (
-    <section>
-      <div className="mx-auto grid max-w-7xl grid-cols-[repeat(auto-fit,minmax(225px,1fr))] gap-8 p-8">
-        {places.map((place) => (
-          <Item {...{ place }} key={place._id} />
-        ))}
-        {places.map((place) => (
-          <Item {...{ place }} key={place._id} />
-        ))}
-      </div>
-    </section>
+    <div className="grid w-full max-w-7xl grid-cols-[repeat(auto-fit,minmax(230px,1fr))] items-center gap-8 px-4 py-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {accomodations.map((accomodation, index) => (
+        <Item {...accomodation} key={index} />
+      ))}
+    </div>
   );
 };
 
